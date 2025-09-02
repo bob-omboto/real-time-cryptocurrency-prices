@@ -50,6 +50,7 @@ This project creates an end-to-end data pipeline that:
 │   └── azure-pipelines.yml    # Azure DevOps pipeline definition
 │
 ├── src/
+    ├── __init__.py
 │   └── ingest_crypto.py       # Main application script
 │
 ├── tests/                     # Test files
