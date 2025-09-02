@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Ingest Crypto Script",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/ingest_crypto.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "KEY_VAULT_URI": "https://<YOUR-KEY-VAULT-NAME>.vault.azure.net/",
+                "EVENT_HUB_CONNECTION_SECRET_NAME": "<YOUR-SECRET-NAME-FOR-EH-CONN-STRING>",
+                "EVENT_HUB_NAME": "<YOUR-EVENT-HUB-NAME>"
+            }
+        }
+    ]
+}
