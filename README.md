@@ -59,6 +59,7 @@ This project creates an end-to-end data pipeline that:
 │   ├── test_api.py           # Tests for API interactions
 │   └── test_integration.py    # Integration tests
 │
+├── pytest.ini
 ├── .gitignore                 # Git ignore rules
 ├── README.md                  # Project documentation
 └── requirements.txt           # Python dependencies
