@@ -20,7 +20,7 @@ steps:
 
   - task: AzureKeyVault@2
     inputs:
-      azureSubscription: 'azsubscription'
+      azureSubscription: 'az-Subscription'
       KeyVaultName: 'azkeyvault-001'
       SecretsFilter: 'eventhubname,eventhubstring'
       RunAsPreJob: true
