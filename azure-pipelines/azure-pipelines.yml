@@ -1,48 +1,30 @@
-# This pipeline runs a Python script that ingests data into Event Hub.
-# It securely fetches credentials from Azure Key Vault.
-
 trigger:
-- main # Trigger the pipeline on commits to the main branch
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest' # Use a Microsoft-hosted agent
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.9' # Specify the Python version
-  displayName: 'Use Python 3.9'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(pythonVersion)'
+      addToPath: true
 
-- script: |
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
 
-- task: AzureKeyVault@2
-  inputs:
-    azureSubscription: '<Your-Azure-Service-Connection-Name>' # Name of your service connection
-    KeyVaultName: '<Your-Key-Vault-Name>'
-    SecretsFilter: '<YOUR-SECRET-NAME-FOR-EH-CONN-STRING>' # The name of the secret in Key Vault
-    RunAsPreJob: false
-  displayName: 'Download Event Hub Connection String from Key Vault'
+  - task: AzureKeyVault@2
+    inputs:
+      azureSubscription: 'azsubscription'
+      KeyVaultName: 'azkeyvault-001'
+      SecretsFilter: 'eventhubname,eventhubstring'
+      RunAsPreJob: true
 
-- script: |
-    source .venv/bin/activate
-    # The AzureKeyVault task makes the secret available as a variable
-    # with the same name as the secret. We export it as an environment variable
-    # that the Python script expects.
-    export EVENT_HUB_CONNECTION_SECRET_NAME='<YOUR-SECRET-NAME-FOR-EH-CONN-STRING>'
-    export EVENT_HUB_NAME='<YourFabricEventHubName>'
-    export KEY_VAULT_URI='https://<Your-Key-Vault-Name>.vault.azure.net/'
-
-    # Run the script
-    python src/ingest_crypto.py
-  displayName: 'Run Crypto Ingestion Script'
-  # The secret from Key Vault is automatically mapped to an environment variable.
-  # We reference it here to ensure it's available to the script.
-  env:
-    # The variable name is the secret name with dots/dashes replaced.
-    # Check the logs of the Key Vault task for the exact variable name.
-    EH_CONN_STR: $(<YOUR-SECRET-NAME-FOR-EH-CONN-STRING>)
+  - script: |
+      python src/test2.py
+    displayName: 'Run crypto ingestion script'
