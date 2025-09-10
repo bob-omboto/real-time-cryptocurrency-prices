@@ -26,5 +26,5 @@ steps:
       RunAsPreJob: true
 
   - script: |
-      python src/test2.py
+      python src/ingest_crypto.py
     displayName: 'Run crypto ingestion script'
