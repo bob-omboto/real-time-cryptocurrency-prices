@@ -22,11 +22,11 @@ secret_client = SecretClient(vault_url=vault_url, credential=credential)
 eventhub_name = secret_client.get_secret(eventhub_name_secret).value
 connection_str = secret_client.get_secret(eventhub_string_secret).value
 
-eventhub_name = os.environ.get('eventhubname')
-eventhub_string = os.environ.get('eventhubstring')
+# eventhub_name = os.environ.get('eventhubname')
+# eventhub_string = os.environ.get('eventhubstring')
 
-if not eventhub_name or not eventhub_string:
-    raise ValueError("Environment variables for Event Hub are not set.")
+# if not eventhub_name or not eventhub_string:
+#     raise ValueError("Environment variables for Event Hub are not set.")
 # Load config
 
 # Initialize Event Hub producer
